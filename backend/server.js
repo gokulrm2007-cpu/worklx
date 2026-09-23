@@ -109,16 +109,35 @@ io.on('connection', (socket) => {
   });
 });
 
+// Serve Frontend Static Assets (Merged Single-Server Mode)
+const path = require('path');
+const frontendDist = path.join(__dirname, '../frontend/dist');
+app.use(express.static(frontendDist));
+
+// Catch-all route to serve React App for client-side routing
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api') || req.path.startsWith('/socket.io')) {
+    return next();
+  }
+  res.sendFile(path.join(frontendDist, 'index.html'), (err) => {
+    if (err) {
+      next();
+    }
+  });
+});
+
 app.use(errorHandler);
 
 if (process.env.NODE_ENV !== 'test') {
   server.listen(PORT, () => {
     console.log(`=======================================================`);
-    console.log(`🚀 WORKLX Server running on http://localhost:${PORT}`);
+    console.log(`🚀 WORKLX Unified Server running on http://localhost:${PORT}`);
     console.log(`⚡ Tagline: "Hire Trusted Skilled Workers"`);
-    console.log(`🔗 Health Check: http://localhost:${PORT}/api/health`);
+    console.log(`🌐 Full-Stack App: http://localhost:${PORT}/`);
+    console.log(`🔗 API & Health Check: http://localhost:${PORT}/api/health`);
     console.log(`=======================================================`);
   });
 }
 
 module.exports = { app, server, io };
+
