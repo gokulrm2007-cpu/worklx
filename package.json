@@ -1,0 +1,30 @@
+{
+  "name": "worklx",
+  "version": "1.0.0",
+  "description": "WORKLX – Worker Hiring & Service Marketplace (Full-Stack MERN Platform)",
+  "main": "backend/server.js",
+  "scripts": {
+    "install-all": "npm install --prefix backend && npm install --prefix frontend",
+    "server": "npm start --prefix backend",
+    "client": "npm run dev --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "npm run build --prefix frontend",
+    "seed": "node backend/config/seed.js",
+    "start": "node backend/server.js"
+  },
+  "keywords": [
+    "worklx",
+    "marketplace",
+    "worker-hiring",
+    "service-booking",
+    "mern",
+    "react",
+    "express",
+    "socketio"
+  ],
+  "author": "gokul",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
